@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interação com API</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>Tabela de Dados</h1>
+    <div id="container">
+         </div>
+    <script>
+        async function carregarAlunos() {
+            const resposta = await fetch ("http://localhost:3031/mostrar");
+            const alunos = await resposta.json();
+
+            const container = document.getElementById("container");
+            container.innerHTML = "";
+
+            alunos.forEach((aluno) => {
+            const alunoDiv = document.createElement("div");
+            container.innerHTML = `
+<table style="border-collapse: collapse; width: 100%;">
+    <tr>
+        <th style="border: 1px solid black;">Nome</th>
+        <th style="border: 1px solid black;">Série</th>
+        <th style="border: 1px solid black;">Turma</th>
+    </tr>
+    <tr style="align:center">
+        <td style="border: 1px solid black;">${aluno.nome}</td>
+        <td style="border: 1px solid black;">${aluno.serie}</td>
+        <td style="border: 1px solid black;">${aluno.turma}</td>
+    </tr>
+</table>
+`;
+            container.appendChild(alunoDiv);
+
+        })
+
+        };
+
+        window.onload = carregarAlunos;
+
+
+
+    </script>
+</body>
+</html>
